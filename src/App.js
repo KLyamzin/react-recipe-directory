@@ -7,10 +7,12 @@ import Navbar from './components/Navbar';
 import ThemeSelector from './components/ThemeSelector';
 
 import './App.css';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
+  const { mode } = useTheme();
   return (
-    <div className="App">
+    <div className={`App ${mode}`}>
       <BrowserRouter>
         <Navbar></Navbar>
         <ThemeSelector />
