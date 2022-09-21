@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import './RecipeList.css';
+import trashCan from '../assets/trashcan.svg';
 
 export default function RecipeList({ recipes }) {
   const { mode } = useTheme();

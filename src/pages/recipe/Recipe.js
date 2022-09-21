@@ -1,22 +1,35 @@
-import { useFetch } from '../../hooks/useFetch';
-// import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
+import { projectFirestore } from '../../firebase/config';
+
 import './Recipe.css';
 
 export default function Recipe() {
   const { mode } = useTheme();
   const { id } = useParams(); // this will give us params.id from the url
-  const url = 'http://localhost:3000/recipes/' + id;
-  const { data: recipe, isPending, error } = useFetch(url);
-  // const history = useHistory();
-  // useEffect(() => {
-  //   if (error) {
-  //     setTimeout(() => {
-  //       history.push('/');
-  //     }, 2000);
-  //   }
-  // }, [error, history]);
+
+  const [recipe, setRecipe] = useState(null);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setIsPending(true);
+    projectFirestore
+      .collection('recipes')
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setIsPending(false);
+          setRecipe(doc.data());
+        } else {
+          setIsPending(false);
+          setError('Could not fetch the data');
+        }
+      });
+  }, [id]);
+
   return (
     <div className={`recipe ${mode}`}>
       {error && <p className="error">{error}</p>}
