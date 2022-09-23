@@ -20,14 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create/" element={<Create />} />
-
           <Route path="/search/" element={<Search />} />
-
           <Route path="/recipes/:id" element={<Recipe />} />
-
-          {/* <Route></Route>
-          <Route></Route>
-          <Route></Route> */}
         </Routes>
       </BrowserRouter>
     </div>
